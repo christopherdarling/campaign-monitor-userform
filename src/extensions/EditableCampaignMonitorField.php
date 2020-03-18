@@ -4,6 +4,7 @@ namespace SolutionsOutsourced\Fields;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldButtonRow;
 use SilverStripe\Forms\GridField\GridFieldConfig;
@@ -24,13 +25,13 @@ use Symbiote\GridFieldExtensions\GridFieldTitleHeader;
 
 
 /**
-     * Creates an editable field that allows users to choose a list
-     * From Campaign Monitor and choose default fields
-     * On submission of the form a new subscription will be created
-     *
-     *
-     * @package campaign-monitor-userform
-     */
+ * Creates an editable field that allows users to choose a list
+ * From Campaign Monitor and choose default fields
+ * On submission of the form a new subscription will be created
+ *
+ *
+ * @package campaign-monitor-userform
+ */
 class EditableCampaignMonitorField extends EditableFormField
 {
 
@@ -164,9 +165,9 @@ class EditableCampaignMonitorField extends EditableFormField
 
         // ensure format and data is correct based on type
         if ($fieldType == 'DropdownField' || $fieldType == 'CheckboxSetField' || $fieldType == 'OptionsetField') {
-            $field = $fieldType::create($this->Name, $this->EscapedTitle, $this->getOptionsMap());
+            $field = Injector::inst()->createWithArgs('SilverStripe\\Forms\\' . $fieldType, [$this->Name, $this->EscapedTitle, $this->getOptionsMap()]);
         } else {
-            $field = $fieldType::create($this->Name, $this->EscapedTitle);
+            $field = Injector::inst()->createWithArgs('SilverStripe\\Forms\\' . $fieldType, [$this->Name, $this->EscapedTitle]);
         }
         // set defaults
         $defaultOption = $this->getDefaultOptions()->first();
