@@ -1,6 +1,7 @@
 <?php
 namespace SolutionsOutsourced\Fields;
 
+use SilverStripe\ORM\Map;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\DropdownField;
@@ -188,7 +189,7 @@ class EditableCampaignMonitorField extends EditableFormField
     {
         $optionSet = $this->CustomOptions();
         $optionMap = $optionSet->map('EscapedTitle', 'Title');
-        if ($optionMap instanceof SS_Map ) {
+        if ($optionMap instanceof Map ) {
             return $optionMap->toArray();
         }
         return $optionMap;
