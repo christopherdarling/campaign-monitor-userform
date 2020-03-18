@@ -219,6 +219,11 @@ class EditableCampaignMonitorField extends EditableFormField
             $custom_fields = $this->getCustomFields($data);
             if (empty($custom_fields)) { $custom_fields = array(); }
 
+            # Bail attempting subscribe if we haven't been provided an Email
+            if (empty($data[$this->owner->getField('EmailField')])) {
+                return 'Yes, but no email entered';
+            }
+
             $dataToSend = array(
                 'EmailAddress' => $data[$this->owner->getField('EmailField')],
                 'Name' => $data[$this->owner->getField('FirstNameField')].' '.$data[$this->owner->getField('LastNameField')],
